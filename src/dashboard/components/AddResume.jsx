@@ -22,16 +22,18 @@ function AddResume() {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const onCreate = async () => {
+    if (!user) {
+      alert("You must be logged in");
+      return;
+    }
     setLoading(true);
     const uuid = uuidv4();
     // console.log(uuid);
     const data = {
-      data: {
-        Title: resumeTitle,
-        ResumeId: uuid,
-        UserEmail: user?.primaryEmailAddress?.emailAddress,
-        UserName: user?.fullName,
-      },
+      Title: resumeTitle,
+      ResumeId: uuid,
+      UserEmail: user?.primaryEmailAddress?.emailAddress,
+      UserName: user?.fullName,
     };
 
     GlobalApi.CreateNewResume(data).then(
