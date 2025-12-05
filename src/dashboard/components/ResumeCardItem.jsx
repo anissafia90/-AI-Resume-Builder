@@ -20,13 +20,16 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 import GlobalApi from "../../service/GlobalApi";
 import { toast } from "sonner";
 
 function ResumeCardItem({ resume, refreshData }) {
   const navigation = useNavigate();
   const [openAlert, setOpenAlert] = useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [updatedTitle, setUpdatedTitle] = useState(resume.Title);
   // const onMenuClick=(url)=>{
   //   navigation(url)
   // }
@@ -43,6 +46,28 @@ function ResumeCardItem({ resume, refreshData }) {
       },
       (error) => {
         setLoading(false);
+      }
+    );
+  };
+
+  const onUpdate = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        Title: updatedTitle,
+      },
+    };
+    GlobalApi.UpdateResumeDetail(resume.documentId, data).then(
+      (resp) => {
+        console.log(resp);
+        toast("Resume Title Updated!");
+        refreshData();
+        setLoading(false);
+        setOpenUpdateDialog(false);
+      },
+      (error) => {
+        setLoading(false);
+        toast("Failed to update resume");
       }
     );
   };
@@ -102,6 +127,9 @@ function ResumeCardItem({ resume, refreshData }) {
             >
               Download
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenUpdateDialog(true)}>
+              Rename
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpenAlert(true)}>
               Delete
             </DropdownMenuItem>
@@ -123,6 +151,32 @@ function ResumeCardItem({ resume, refreshData }) {
               </AlertDialogCancel>
               <AlertDialogAction onClick={onDelete} disabled={loading}>
                 {loading ? <Loader2Icon className="animate-spin" /> : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <AlertDialog open={openUpdateDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Update Resume Title</AlertDialogTitle>
+              <AlertDialogDescription>
+                Enter a new title for your resume.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <div className="py-4">
+              <Input
+                value={updatedTitle}
+                onChange={(e) => setUpdatedTitle(e.target.value)}
+                placeholder="Resume Title"
+              />
+            </div>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setOpenUpdateDialog(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={onUpdate} disabled={loading}>
+                {loading ? <Loader2Icon className="animate-spin" /> : "Update"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
