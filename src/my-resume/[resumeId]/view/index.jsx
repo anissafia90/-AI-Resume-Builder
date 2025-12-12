@@ -14,9 +14,9 @@ function ViewResume() {
     GetResumeInfo();
   }, []);
 
-  const GetResumeInfo = () => {
-    GlobalApi.GetResumeById(resumeId).then((resp) => {
-      console.log("RAW RESPONSE:", resp.data);
+  const GetResumeInfo = async () => {
+    try {
+      const resp = await GlobalApi.GetResumeById(resumeId);
 
       const clean = {
         id: resp.data.data.id,
@@ -24,10 +24,11 @@ function ViewResume() {
         ...resp.data.data.attributes,
       };
 
-      console.log("CLEANED RESUME:", clean);
-
+      console.log("CLEAN VIEW:", clean);
       setResumeInfo(clean);
-    });
+    } catch (err) {
+      console.error("ERROR VIEW RESUME:", err);
+    }
   };
 
   const HandleDownload = () => {
@@ -37,9 +38,9 @@ function ViewResume() {
   const handleShare = async () => {
     const shareData = {
       title:
-        (resumeInfo?.firstName || "") +
+        (resumeInfo?.FirstName || "") +
         " " +
-        (resumeInfo?.lastName || "") +
+        (resumeInfo?.LastName || "") +
         " resume",
       text: "Hello Everyone, This is my resume please open url to see it",
       url: import.meta.env.VITE_BASE_URL + "/my-resume/" + resumeId + "/view",
@@ -48,7 +49,6 @@ function ViewResume() {
     if (navigator.share) {
       try {
         await navigator.share(shareData);
-        console.log("shared successfully!");
       } catch (err) {
         console.error("share failed", err);
       }
@@ -74,7 +74,7 @@ function ViewResume() {
 
         <div className="my-10 mx-10 md:mx-20 lg:mx-36">
           <h2 className="text-center text-2xl font-medium">
-            Congrats! Your Ultimate AI generates Resume is ready !
+            Congrats! Your Ultimate AI generates Resume is ready!
           </h2>
           <p className="text-center text-gray-400">
             Now you are ready to download your resume and you can share unique
