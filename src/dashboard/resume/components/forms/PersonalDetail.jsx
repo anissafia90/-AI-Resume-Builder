@@ -66,7 +66,10 @@ function PersonalDetail({ enabledNext }) {
     };
 
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(realId, payload);
+      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, payload);
+
+      console.log("Updating resume ID:", resumeInfo.id);
+      console.log("Payload:", payload);
 
       setResumeInfo({
         id: resp.data.id,
