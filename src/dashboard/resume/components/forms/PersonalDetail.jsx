@@ -13,7 +13,8 @@ function PersonalDetail({ enabledNext }) {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN;
+  const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_API_KEY;
+
   useEffect(() => {
     if (resumeInfo) {
       setFormData({
