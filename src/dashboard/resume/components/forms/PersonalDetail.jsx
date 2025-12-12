@@ -52,33 +52,25 @@ function PersonalDetail({ enabledNext }) {
       return;
     }
 
-    // دمج البيانات الأصلية + التعديلات
-    const mergedData = {
-      ...resumeInfo, // كل الحقول الأصلية
-      ...formData, // + التحديثات الجديدة
+    const payload = {
+      Title: resumeInfo.Title || "My CV",
+      ResumeId: resumeInfo.ResumeId,
+      UserEmail: resumeInfo.UserEmail,
+      UserName: resumeInfo.UserName,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      jobTitle: formData.jobTitle,
+      address: formData.address,
+      phone: formData.phone,
+      email: formData.email,
     };
-
-    // حذف الحقول المحظورة
-    const forbidden = [
-      "id",
-      "createdAt",
-      "updatedAt",
-      "publishedAt",
-      "documentId",
-      "locale",
-      "localizations",
-    ];
-    forbidden.forEach((key) => delete mergedData[key]);
-
-    const payload = { data: mergedData };
-    console.log("FINAL PAYLOAD TO STRAPI:", payload);
 
     try {
       const resp = await GlobalApi.UpdateResumeDetail(realId, payload);
 
       setResumeInfo({
-        id: resp.data.data.id,
-        ...resp.data.data.attributes,
+        id: resp.data.id,
+        ...resp.data.attributes,
       });
 
       toast("Details updated successfully");
