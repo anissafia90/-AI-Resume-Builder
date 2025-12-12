@@ -16,12 +16,16 @@ function ViewResume() {
 
   const GetResumeInfo = async () => {
     try {
-      const resp = await GlobalApi.GetResumeById(resumeId);
+      const resp = await GlobalApi.GetResumeByDocumentId(resumeId);
+
+      console.log("RAW VIEW:", resp.data);
+
+      const item = resp.data.data[0]; // أول نتيجة
 
       const clean = {
-        id: resp.data.data.id,
-        documentId: resp.data.data.documentId,
-        ...resp.data.data.attributes,
+        id: item.id,
+        documentId: item.attributes.documentId,
+        ...item.attributes,
       };
 
       console.log("CLEAN VIEW:", clean);

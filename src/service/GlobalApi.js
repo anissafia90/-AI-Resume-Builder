@@ -21,6 +21,11 @@ const GetUserResumes = (UserEmail) =>
 const UpdateResumeDetail = (id, data) =>
   axiosClient.put("/user-resumes/" + id, data);
 
+const GetResumeByDocumentId = (documentId) =>
+  axiosClient.get(
+    `/user-resumes?filters[documentId][$eq]=${documentId}&populate=*`
+  );
+
 // GET by numeric id
 const GetResumeById = (id) =>
   axiosClient.get("/user-resumes/" + id + "?populate=*");
@@ -34,4 +39,5 @@ export default {
   UpdateResumeDetail,
   GetResumeById,
   DeleteResumeById,
+  GetResumeByDocumentId,
 };
