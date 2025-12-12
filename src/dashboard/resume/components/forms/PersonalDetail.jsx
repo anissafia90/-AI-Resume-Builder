@@ -31,24 +31,34 @@ function PersonalDetail({ enabledNext }) {
     });
   };
 
-  const onSave = (e) => {
+  const onSave = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (!resumeInfo?.id) {
+      toast("Resume ID not found");
+      setLoading(false);
+      return;
+    }
+
     const data = {
       data: formData,
     };
-    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
-      (resp) => {
-        console.log(resp);
-        enabledNext(true);
-        setLoading(false);
-        toast("Details updated");
-      },
-      (error) => {
-        setLoading(false);
-      }
-    );
+
+    try {
+      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, data);
+
+      console.log("UPDATED ✅", resp.data);
+      enabledNext(true);
+      toast("Details updated successfully ✅");
+    } catch (error) {
+      console.error("UPDATE ERROR ❌", error.response?.data);
+      toast("Update failed ❌");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Personal Detail</h2>
