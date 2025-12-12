@@ -54,7 +54,13 @@ function PersonalDetail({ enabledNext }) {
       return;
     }
 
-    const data = { data: formData };
+    const cleanedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, value || ""])
+    );
+
+    const data = {
+      data: cleanedData,
+    };
 
     try {
       const resp = await GlobalApi.UpdateResumeDetail(realId, data);
