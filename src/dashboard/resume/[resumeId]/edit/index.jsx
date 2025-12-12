@@ -15,6 +15,7 @@ function EditResume() {
 
       const clean = {
         id: resp.data.data.id,
+        documentId: resp.data.data.documentId,
         ...resp.data.data.attributes,
       };
       console.log("CLEAN:", clean);
