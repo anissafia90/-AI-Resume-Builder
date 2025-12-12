@@ -35,7 +35,10 @@ function PersonalDetail({ enabledNext }) {
     });
     setResumeInfo({
       ...resumeInfo,
-      [name]: value,
+      data: {
+        ...resumeInfo.data,
+        [name]: value,
+      },
     });
   };
 
@@ -76,7 +79,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">First Name</label>
             <Input
               name="firstName"
-              value={formData?.firstName || resumeInfo?.data?.firstName || ""}
+              value={formData?.firstName}
               required
               onChange={handleInputChange}
             />
@@ -87,7 +90,7 @@ function PersonalDetail({ enabledNext }) {
               name="lastName"
               required
               onChange={handleInputChange}
-              value={formData?.lastName || resumeInfo?.data?.lastName || ""}
+              value={formData?.lastName}
             />
           </div>
           <div className="col-span-2">
@@ -95,7 +98,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="jobTitle"
               required
-              value={formData?.jobTitle || resumeInfo?.data?.jobTitle || ""}
+              value={formData?.jobTitle}
               onChange={handleInputChange}
             />
           </div>
@@ -104,7 +107,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="address"
               required
-              value={formData?.address || resumeInfo?.data?.address || ""}
+              value={formData?.address}
               onChange={handleInputChange}
             />
           </div>
@@ -113,7 +116,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="phone"
               required
-              value={formData?.phone || resumeInfo?.data?.phone || ""}
+              value={formData?.phone}
               onChange={handleInputChange}
             />
           </div>
@@ -122,7 +125,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="email"
               required
-              value={formData?.email || resumeInfo?.data?.email || ""}
+              value={formData?.email}
               onChange={handleInputChange}
             />
           </div>
