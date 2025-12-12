@@ -52,12 +52,13 @@ function PersonalDetail({ enabledNext }) {
       return;
     }
 
+    // دمج البيانات الأصلية + التعديلات
     const mergedData = {
-      ...resumeInfo, // كل الداتا الأصلية
+      ...resumeInfo, // كل الحقول الأصلية
       ...formData, // + التحديثات الجديدة
     };
 
-    // حذف الحقول التي يمنعها Strapi
+    // حذف الحقول المحظورة
     const forbidden = [
       "id",
       "createdAt",
