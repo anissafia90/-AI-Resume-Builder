@@ -26,6 +26,9 @@ function EditResume() {
       const clean = {
         id: resp.data.data.id,
         documentId: resp.data.data.documentId,
+        Experience: resp.data.data.attributes.Experience || [],
+        Education: resp.data.data.attributes.Education || [],
+        Skills: resp.data.data.attributes.Skills || [],
         ...resp.data.data.attributes,
       };
       console.log("CLEAN:", clean);
