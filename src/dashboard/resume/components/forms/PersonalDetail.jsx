@@ -46,8 +46,8 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    if (!resumeInfo?.ResumeId) {
-      toast("Resume ResumeId not found");
+    if (!resumeInfo?.id) {
+      toast("Resume id not found");
       setLoading(false);
       return;
     }
@@ -116,17 +116,16 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">First Name</label>
             <Input
               name="firstName"
-              value={formData.firstName || ""}
+              defaultValue={formData.firstName || ""}
               required
               onChange={handleInputChange}
             />
           </div>
-
           <div>
             <label className="text-sm">Last Name</label>
             <Input
               name="lastName"
-              value={formData.lastName || ""}
+              defaultValue={formData.lastName || ""}
               required
               onChange={handleInputChange}
             />
@@ -136,7 +135,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Job Title</label>
             <Input
               name="jobTitle"
-              value={formData.jobTitle || ""}
+              defaultValue={formData.jobTitle || ""}
               required
               onChange={handleInputChange}
             />
@@ -146,7 +145,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Address</label>
             <Input
               name="address"
-              value={formData.address || ""}
+              defaultValue={formData.address || ""}
               required
               onChange={handleInputChange}
             />
@@ -156,7 +155,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Phone</label>
             <Input
               name="phone"
-              value={formData.phone || ""}
+              defaultValue={formData.phone || ""}
               required
               onChange={handleInputChange}
             />
@@ -166,7 +165,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">Email</label>
             <Input
               name="email"
-              value={formData.email || ""}
+              defaultValue={formData.email || ""}
               required
               onChange={handleInputChange}
             />
