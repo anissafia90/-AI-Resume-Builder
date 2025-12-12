@@ -7,6 +7,17 @@ import GlobalApi from "../../../../service/GlobalApi";
 
 function EditResume() {
   const { resumeId } = useParams(); // هذا = documentId
+  const defaultResume = {
+    Title: "",
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    Phone: "",
+    Summary: "",
+    Experience: [],
+    Education: [],
+    Skills: [],
+  };
   const [resumeInfo, setResumeInfo] = useState(defaultResume);
   const GetResumeInfo = async () => {
     try {
