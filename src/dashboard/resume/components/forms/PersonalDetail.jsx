@@ -46,8 +46,8 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    if (!resumeInfo?.documentId) {
-      toast("Resume documentId not found");
+    if (!resumeInfo?.ResumeId) {
+      toast("Resume ResumeId not found");
       setLoading(false);
       return;
     }
@@ -70,7 +70,7 @@ function PersonalDetail({ enabledNext }) {
 
     try {
       const response = await fetch(
-        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.documentId}`,
+        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.ResumeId}`,
         {
           method: "PUT",
           headers: {
