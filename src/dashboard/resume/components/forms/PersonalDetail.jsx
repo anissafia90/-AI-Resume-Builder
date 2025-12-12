@@ -54,20 +54,27 @@ function PersonalDetail({ enabledNext }) {
       return;
     }
 
+    // ندمجو البيانات القديمة مع الجديدة
+    const merged = {
+      ...resumeInfo.data, // كل البيانات الموجودة
+      ...formData, // البيانات المحدثة
+    };
+
+    // تنظيف null و undefined
     const cleanedData = Object.fromEntries(
-      Object.entries(formData).map(([key, value]) => [key, value || ""])
+      Object.entries(merged).map(([key, value]) => [key, value ?? ""])
     );
 
-    const data = {
-      data: cleanedData,
-    };
+    const data = { data: cleanedData };
+
+    console.log("FINAL PAYLOAD SENT TO STRAPI:", data);
 
     try {
       const resp = await GlobalApi.UpdateResumeDetail(realId, data);
       toast("Details updated successfully");
       enabledNext(true);
     } catch (error) {
-      console.error(error);
+      console.error(error.response?.data || error);
       toast("Update failed");
     } finally {
       setLoading(false);
