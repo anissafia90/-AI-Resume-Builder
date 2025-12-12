@@ -54,7 +54,7 @@ function PersonalDetail({ enabledNext }) {
 
     const payload = {
       Title: resumeInfo.Title || "My CV",
-      ResumeId: resumeInfo.ResumeId,
+      ResumeId: resumeInfo.documentId,
       UserEmail: resumeInfo.UserEmail,
       UserName: resumeInfo.UserName,
       firstName: formData.firstName,
@@ -66,9 +66,12 @@ function PersonalDetail({ enabledNext }) {
     };
 
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, payload);
+      const resp = await GlobalApi.UpdateResumeDetail(
+        resumeInfo.documentId,
+        payload
+      );
 
-      console.log("Updating resume ID:", resumeInfo.id);
+      console.log("Updating resume ID:", resumeInfo.documentId);
       console.log("Payload:", payload);
 
       setResumeInfo({
