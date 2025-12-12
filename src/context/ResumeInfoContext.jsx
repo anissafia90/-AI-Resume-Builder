@@ -1,18 +1,18 @@
+import { createContext, useState } from "react";
+
 const defaultResume = {
+  Title: "",
+  FirstName: "",
+  LastName: "",
+  Email: "",
+  Phone: "",
+  Summary: "",
   Experience: [],
   Education: [],
   Skills: [],
-  // ...
 };
 
-export const ResumeInfoContext = createContext();
-
-export const ResumeInfoProvider = ({ children }) => {
-  const [resumeInfo, setResumeInfo] = useState(defaultResume);
-
-  return (
-    <ResumeInfoContext.Provider value={{ resumeInfo, setResumeInfo }}>
-      {children}
-    </ResumeInfoContext.Provider>
-  );
-};
+export const ResumeInfoContext = createContext({
+  resumeInfo: defaultResume,
+  setResumeInfo: () => {},
+});

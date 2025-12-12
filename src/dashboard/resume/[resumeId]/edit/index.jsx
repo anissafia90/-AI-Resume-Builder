@@ -7,8 +7,7 @@ import GlobalApi from "../../../../service/GlobalApi";
 
 function EditResume() {
   const { resumeId } = useParams(); // هذا = documentId
-  const [resumeInfo, setResumeInfo] = useState(null);
-
+  const [resumeInfo, setResumeInfo] = useState(defaultResume);
   const GetResumeInfo = async () => {
     try {
       const resp = await GlobalApi.GetResumeById(resumeId);
