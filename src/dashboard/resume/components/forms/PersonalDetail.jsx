@@ -53,24 +53,24 @@ function PersonalDetail({ enabledNext }) {
     }
 
     const mergedData = {
-      ...resumeInfo,
-      ...formData,
+      ...resumeInfo, // كل الداتا الأصلية
+      ...formData, // + التحديثات الجديدة
     };
 
-    // حذف keys الممنوعة
+    // حذف الحقول التي يمنعها Strapi
     const forbidden = [
       "id",
-      "documentId",
       "createdAt",
       "updatedAt",
       "publishedAt",
+      "documentId",
       "locale",
       "localizations",
     ];
     forbidden.forEach((key) => delete mergedData[key]);
 
     const payload = { data: mergedData };
-    console.log("FINAL PAYLOAD:", payload);
+    console.log("FINAL PAYLOAD TO STRAPI:", payload);
 
     try {
       const resp = await GlobalApi.UpdateResumeDetail(realId, payload);
@@ -80,10 +80,10 @@ function PersonalDetail({ enabledNext }) {
         ...resp.data.data.attributes,
       });
 
-      toast("Updated successfully");
+      toast("Details updated successfully");
       enabledNext(true);
-    } catch (err) {
-      console.error(err.response?.data || err);
+    } catch (error) {
+      console.error(error.response?.data || error);
       toast("Update failed");
     } finally {
       setLoading(false);
