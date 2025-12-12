@@ -53,8 +53,8 @@ function PersonalDetail({ enabledNext }) {
     }
 
     const payload = {
-      Title: resumeInfo.Title || "My CV",
-      ResumeId: resumeInfo.documentId,
+      Title: resumeInfo.Title,
+      ResumeId: resumeInfo.ResumeId,
       UserEmail: resumeInfo.UserEmail,
       UserName: resumeInfo.UserName,
       firstName: formData.firstName,
@@ -65,13 +65,22 @@ function PersonalDetail({ enabledNext }) {
       email: formData.email,
     };
 
+    // PUT request
+    await fetch(
+      `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(
-        resumeInfo.documentId,
-        payload
-      );
+      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, payload);
 
-      console.log("Updating resume ID:", resumeInfo.documentId);
+      console.log("Updating resume ID:", resumeInfo.id);
       console.log("Payload:", payload);
 
       setResumeInfo({
