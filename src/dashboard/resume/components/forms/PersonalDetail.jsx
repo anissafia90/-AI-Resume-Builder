@@ -11,12 +11,20 @@ function PersonalDetail({ enabledNext }) {
   const params = useParams();
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log("---", resumeInfo);
-  }, []);
-
+    if (resumeInfo) {
+      setFormData({
+        firstName: resumeInfo.firstName || "",
+        lastName: resumeInfo.lastName || "",
+        jobTitle: resumeInfo.jobTitle || "",
+        address: resumeInfo.address || "",
+        phone: resumeInfo.phone || "",
+        email: resumeInfo.email || "",
+      });
+    }
+  }, [resumeInfo]);
   const handleInputChange = (e) => {
     enabledNext(false);
     const { name, value } = e.target;
