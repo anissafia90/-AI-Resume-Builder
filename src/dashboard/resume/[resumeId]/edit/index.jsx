@@ -22,14 +22,24 @@ function EditResume() {
   const GetResumeInfo = async () => {
     try {
       const resp = await GlobalApi.GetResumeById(resumeId);
-
+      const attributes = resp?.data?.data?.attributes || {};
       const clean = {
-        id: resp.data.data.id,
-        documentId: resp.data.data.documentId,
-        Experience: resp.data.data.attributes.Experience || [],
-        Education: resp.data.data.attributes.Education || [],
-        Skills: resp.data.data.attributes.Skills || [],
-        ...resp.data.data.attributes,
+        id: resp?.data?.data?.id || null,
+        documentId: resp?.data?.data?.documentId || null,
+        Title: attributes.Title || "",
+        firstName: attributes.firstName || "",
+        lastName: attributes.lastName || "",
+        email: attributes.email || "",
+        phone: attributes.phone || "",
+        jobTitle: attributes.jobTitle || "",
+        Summary: attributes.Summary || "",
+        Experience: Array.isArray(attributes.Experience)
+          ? attributes.Experience
+          : [],
+        Education: Array.isArray(attributes.Education)
+          ? attributes.Education
+          : [],
+        Skills: Array.isArray(attributes.Skills) ? attributes.Skills : [],
       };
       console.log("CLEAN:", clean);
       setResumeInfo(clean);
