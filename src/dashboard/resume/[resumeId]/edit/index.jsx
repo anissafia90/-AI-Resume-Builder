@@ -13,7 +13,12 @@ function EditResume() {
     try {
       const resp = await GlobalApi.GetResumeById(resumeId);
 
-      setResumeInfo(resp.data);
+      const clean = {
+        id: resp.data.data.id,
+        ...resp.data.data.attributes,
+      };
+      console.log("CLEAN:", clean);
+      setResumeInfo(clean);
       console.log("FULL RESUME OBJECT ✅", resp.data);
     } catch (error) {
       console.error("ERROR FETCHING RESUME ❌", error);

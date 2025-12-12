@@ -14,16 +14,15 @@ function PersonalDetail({ enabledNext }) {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // عند تحميل الصفحة نعمل مزج مع formData
   useEffect(() => {
-    if (resumeInfo?.data) {
+    if (resumeInfo) {
       setFormData({
-        firstName: resumeInfo.data.firstName || "",
-        lastName: resumeInfo.data.lastName || "",
-        jobTitle: resumeInfo.data.jobTitle || "",
-        address: resumeInfo.data.address || "",
-        phone: resumeInfo.data.phone || "",
-        email: resumeInfo.data.email || "",
+        firstName: resumeInfo.firstName || "",
+        lastName: resumeInfo.lastName || "",
+        jobTitle: resumeInfo.jobTitle || "",
+        address: resumeInfo.address || "",
+        phone: resumeInfo.phone || "",
+        email: resumeInfo.email || "",
       });
     }
   }, [resumeInfo]);
@@ -32,20 +31,13 @@ function PersonalDetail({ enabledNext }) {
     enabledNext(false);
     const { name, value } = e.target;
 
-    const updated = {
-      ...formData,
-      [name]: value,
-    };
-
+    const updated = { ...formData, [name]: value };
     setFormData(updated);
 
-    // تحديث الـ Context للـ Preview
+    // تحديث الـ Preview
     setResumeInfo({
       ...resumeInfo,
-      data: {
-        ...resumeInfo.data,
-        [name]: value,
-      },
+      [name]: value,
     });
   };
 
@@ -53,21 +45,20 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    const realId = resumeInfo?.data?.id;
+    const realId = resumeInfo?.id;
     if (!realId) {
       toast("Resume ID not found");
       setLoading(false);
       return;
     }
 
-    // دمج formData + resumeInfo.data
     const mergedData = {
-      ...resumeInfo.data,
+      ...resumeInfo,
       ...formData,
     };
 
-    // حذف الـ keys الممنوعة
-    const forbiddenKeys = [
+    // حذف keys الممنوعة
+    const forbidden = [
       "id",
       "documentId",
       "createdAt",
@@ -76,18 +67,20 @@ function PersonalDetail({ enabledNext }) {
       "locale",
       "localizations",
     ];
-    forbiddenKeys.forEach((key) => delete mergedData[key]);
+    forbidden.forEach((key) => delete mergedData[key]);
 
     const payload = { data: mergedData };
-    console.log("FINAL PAYLOAD TO STRAPI:", payload);
+    console.log("FINAL PAYLOAD:", payload);
 
     try {
       const resp = await GlobalApi.UpdateResumeDetail(realId, payload);
 
-      // تحديث الكونتكست بعد ال-update
-      setResumeInfo({ data: resp.data.data });
+      setResumeInfo({
+        id: resp.data.data.id,
+        ...resp.data.data.attributes,
+      });
 
-      toast("Details updated successfully");
+      toast("Updated successfully");
       enabledNext(true);
     } catch (err) {
       console.error(err.response?.data || err);
