@@ -14,14 +14,14 @@ function PersonalDetail({ enabledNext }) {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (resumeInfo) {
+    if (resumeInfo?.data) {
       setFormData({
-        firstName: resumeInfo.firstName || "",
-        lastName: resumeInfo.lastName || "",
-        jobTitle: resumeInfo.jobTitle || "",
-        address: resumeInfo.address || "",
-        phone: resumeInfo.phone || "",
-        email: resumeInfo.email || "",
+        firstName: resumeInfo.data.firstName || "",
+        lastName: resumeInfo.data.lastName || "",
+        jobTitle: resumeInfo.data.jobTitle || "",
+        address: resumeInfo.data.address || "",
+        phone: resumeInfo.data.phone || "",
+        email: resumeInfo.data.email || "",
       });
     }
   }, [resumeInfo]);
@@ -43,25 +43,23 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    if (!resumeInfo?.id) {
+    const realId = resumeInfo?.data?.id;
+
+    if (!realId) {
       toast("Resume ID not found");
       setLoading(false);
       return;
     }
 
-    const data = {
-      data: formData,
-    };
+    const data = { data: formData };
 
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, data);
-
-      console.log("UPDATED ✅", resp.data);
+      const resp = await GlobalApi.UpdateResumeDetail(realId, data);
+      toast("Details updated successfully");
       enabledNext(true);
-      toast("Details updated successfully ✅");
     } catch (error) {
-      console.error("UPDATE ERROR ❌", error.response?.data);
-      toast("Update failed ❌");
+      console.error(error);
+      toast("Update failed");
     } finally {
       setLoading(false);
     }
@@ -78,7 +76,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">First Name</label>
             <Input
               name="firstName"
-              value={formData?.firstName}
+              value={formData?.firstName || resumeInfo?.data?.firstName || ""}
               required
               onChange={handleInputChange}
             />
@@ -89,7 +87,7 @@ function PersonalDetail({ enabledNext }) {
               name="lastName"
               required
               onChange={handleInputChange}
-              value={formData?.lastName}
+              value={formData?.lastName || resumeInfo?.data?.lastName || ""}
             />
           </div>
           <div className="col-span-2">
@@ -97,7 +95,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="jobTitle"
               required
-              value={formData?.jobTitle}
+              value={formData?.jobTitle || resumeInfo?.data?.jobTitle || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -106,7 +104,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="address"
               required
-              value={formData?.address}
+              value={formData?.address || resumeInfo?.data?.address || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -115,7 +113,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="phone"
               required
-              value={formData?.phone}
+              value={formData?.phone || resumeInfo?.data?.phone || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -124,7 +122,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="email"
               required
-              value={formData?.email}
+              value={formData?.email || resumeInfo?.data?.email || ""}
               onChange={handleInputChange}
             />
           </div>
