@@ -62,10 +62,7 @@ function Summery({ enabledNext }) {
     };
 
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(
-        resumeInfo?.documentId,
-        payload
-      );
+      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, payload);
       toast("Summary saved successfully");
       enabledNext(true);
     } catch (error) {
