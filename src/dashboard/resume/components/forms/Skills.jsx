@@ -22,8 +22,12 @@ function Skills() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
   useEffect(() => {
-    resumeInfo && setSkillsList(resumeInfo?.Skills);
-  }, []);
+    if (Array.isArray(resumeInfo?.Skills)) {
+      setSkillsList(resumeInfo.Skills);
+    } else {
+      setSkillsList([]);
+    }
+  }, [resumeInfo]);
 
   const handleChange = (index, name, value) => {
     const newEntries = skillsList.slice();
@@ -78,7 +82,7 @@ function Skills() {
       <p>Add Your top professional key skills</p>
 
       <div>
-        {skillsList.map((item, index) => (
+        {(skillsList || []).map((item, index) => (
           <div className="flex justify-between mb-2 border rounded-lg p-3 ">
             <div>
               <label className="text-xs">Name</label>
