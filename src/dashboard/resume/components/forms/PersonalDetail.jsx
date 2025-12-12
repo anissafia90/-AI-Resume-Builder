@@ -70,7 +70,7 @@ function PersonalDetail({ enabledNext }) {
 
     try {
       const response = await fetch(
-        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.ResumeId}`,
+        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.id}`,
         {
           method: "PUT",
           headers: {
