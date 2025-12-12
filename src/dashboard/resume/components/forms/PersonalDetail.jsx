@@ -78,7 +78,7 @@ function PersonalDetail({ enabledNext }) {
             <label className="text-sm">First Name</label>
             <Input
               name="firstName"
-              defaultValue={resumeInfo?.firstName}
+              value={formData?.firstName}
               required
               onChange={handleInputChange}
             />
@@ -89,7 +89,7 @@ function PersonalDetail({ enabledNext }) {
               name="lastName"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo?.lastName}
+              value={formData?.lastName}
             />
           </div>
           <div className="col-span-2">
@@ -97,7 +97,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="jobTitle"
               required
-              defaultValue={resumeInfo?.jobTitle}
+              value={formData?.jobTitle}
               onChange={handleInputChange}
             />
           </div>
@@ -106,7 +106,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="address"
               required
-              defaultValue={resumeInfo?.address}
+              value={formData?.address}
               onChange={handleInputChange}
             />
           </div>
@@ -115,7 +115,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="phone"
               required
-              defaultValue={resumeInfo?.phone}
+              value={formData?.phone}
               onChange={handleInputChange}
             />
           </div>
@@ -124,7 +124,7 @@ function PersonalDetail({ enabledNext }) {
             <Input
               name="email"
               required
-              defaultValue={resumeInfo?.email}
+              value={formData?.email}
               onChange={handleInputChange}
             />
           </div>
