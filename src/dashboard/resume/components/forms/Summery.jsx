@@ -8,54 +8,74 @@ import { Brain, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { AIChatSession } from "../../../../service/AIModal";
 
-const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
+const promptText =
+  "Job Title: {jobTitle} , Depends on job title give me list of summery for 3 experience level, Mid Level and Freasher level in 3-4 lines in array format, With summery and experience_level Field in JSON Format";
+
 function Summery({ enabledNext }) {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [summery, setSummery] = useState();
+  const [summery, setSummery] = useState("");
   const [loading, setLoading] = useState(false);
   const params = useParams();
-  const [aiGeneratedSummeryList, setAiGenerateSummeryList] = useState();
+  const [aiGeneratedSummeryList, setAiGenerateSummeryList] = useState([]);
+
+  // Load existing summary from resumeInfo
   useEffect(() => {
-    summery &&
-      setResumeInfo({
-        ...resumeInfo,
+    if (resumeInfo?.summery) {
+      setSummery(resumeInfo.summery);
+    }
+  }, [resumeInfo]);
+
+  // Update context when user edits
+  useEffect(() => {
+    if (summery !== undefined) {
+      setResumeInfo((prev) => ({
+        ...prev,
         summery: summery,
-      });
+      }));
+    }
   }, [summery]);
 
   const GenerateSummeryFromAI = async () => {
     setLoading(true);
-    const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
-    console.log(PROMPT);
-    const result = await AIChatSession.sendMessage(PROMPT);
-    console.log(JSON.parse(result.response.text()));
+    const PROMPT = promptText.replace("{jobTitle}", resumeInfo?.jobTitle);
 
-    setAiGenerateSummeryList(JSON.parse(result.response.text()));
+    try {
+      const result = await AIChatSession.sendMessage(PROMPT);
+      const json = JSON.parse(result.response.text());
+      setAiGenerateSummeryList(json);
+    } catch (error) {
+      toast("AI generation failed");
+      console.error(error);
+    }
+
     setLoading(false);
   };
 
-  const onSave = (e) => {
+  const onSave = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-    const data = {
+
+    const payload = {
       data: {
         summery: summery,
       },
     };
-    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
-      (resp) => {
-        console.log(resp);
-        enabledNext(true);
-        setLoading(false);
-        toast("Details updated");
-      },
-      (error) => {
-        setLoading(false);
-      }
-    );
+
+    try {
+      const resp = await GlobalApi.UpdateResumeDetail(
+        params?.resumeId,
+        payload
+      );
+      toast("Summary saved successfully");
+      enabledNext(true);
+    } catch (error) {
+      console.error(error);
+      toast("Error saving summary");
+    }
+
+    setLoading(false);
   };
+
   return (
     <div>
       <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
@@ -64,10 +84,10 @@ function Summery({ enabledNext }) {
 
         <form className="mt-7" onSubmit={onSave}>
           <div className="flex justify-between items-end">
-            <label>Add Summery</label>
+            <label>Add Summary</label>
             <Button
               variant="outline"
-              onClick={() => GenerateSummeryFromAI()}
+              onClick={GenerateSummeryFromAI}
               type="button"
               size="sm"
               className="border-primary text-primary flex gap-2"
@@ -75,13 +95,14 @@ function Summery({ enabledNext }) {
               <Brain className="h-4 w-4" /> Generate from AI
             </Button>
           </div>
+
           <Textarea
             className="mt-5"
             required
             value={summery}
-            defaultValue={summery ? summery : resumeInfo?.summery}
             onChange={(e) => setSummery(e.target.value)}
           />
+
           <div className="mt-2 flex justify-end">
             <Button type="submit" disabled={loading}>
               {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
@@ -90,10 +111,11 @@ function Summery({ enabledNext }) {
         </form>
       </div>
 
-      {aiGeneratedSummeryList && (
+      {aiGeneratedSummeryList?.length > 0 && (
         <div className="my-5">
           <h2 className="font-bold text-lg">Suggestions</h2>
-          {aiGeneratedSummeryList?.map((item, index) => (
+
+          {aiGeneratedSummeryList.map((item, index) => (
             <div
               key={index}
               onClick={() => setSummery(item?.summary)}
