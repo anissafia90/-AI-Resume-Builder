@@ -27,7 +27,6 @@ function PersonalDetail({ enabledNext }) {
       });
     }
   }, [resumeInfo]);
-
   const handleInputChange = (e) => {
     enabledNext(false);
     const { name, value } = e.target;
@@ -46,6 +45,7 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
+    console.log("resumeInfo:", resumeInfo);
     if (!resumeInfo?.documentId) {
       toast("Resume documentId not found");
       setLoading(false);
@@ -168,7 +168,7 @@ function PersonalDetail({ enabledNext }) {
         </div>
 
         <div className="mt-3 flex justify-end">
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading || !resumeInfo?.documentId}>
             {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
           </Button>
         </div>
