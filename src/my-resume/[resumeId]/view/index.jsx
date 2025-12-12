@@ -18,9 +18,14 @@ function ViewResume() {
     try {
       const resp = await GlobalApi.GetResumeByDocumentId(resumeId);
 
-      console.log("RAW VIEW:", resp.data);
+      console.log("RAW VIEW RESPONSE:", resp.data);
 
-      const item = resp.data.data[0]; // أول نتيجة
+      if (!resp.data.data || resp.data.data.length === 0) {
+        console.error("No resume found!");
+        return;
+      }
+
+      const item = resp.data.data[0];
 
       const clean = {
         id: item.id,
@@ -29,6 +34,7 @@ function ViewResume() {
       };
 
       console.log("CLEAN VIEW:", clean);
+
       setResumeInfo(clean);
     } catch (err) {
       console.error("ERROR VIEW RESUME:", err);
