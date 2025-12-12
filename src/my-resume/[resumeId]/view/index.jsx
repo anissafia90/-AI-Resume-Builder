@@ -25,16 +25,13 @@ function ViewResume() {
         return;
       }
 
-      const item = resp.data.data[0];
+      const item = resp.data.data[0]; // بدون attributes
 
       const clean = {
-        id: item.id,
-        documentId: item.attributes.documentId,
-        ...item.attributes,
+        ...item,
       };
 
       console.log("CLEAN VIEW:", clean);
-
       setResumeInfo(clean);
     } catch (err) {
       console.error("ERROR VIEW RESUME:", err);
