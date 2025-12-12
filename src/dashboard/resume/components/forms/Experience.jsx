@@ -24,7 +24,7 @@ function Experience() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setExperienceList(
+    setExperinceList(
       Array.isArray(resumeInfo?.Experience) ? resumeInfo.Experience : []
     );
   }, [resumeInfo]);
