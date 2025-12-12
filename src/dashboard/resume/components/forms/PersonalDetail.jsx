@@ -13,7 +13,7 @@ function PersonalDetail({ enabledNext }) {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN;
   useEffect(() => {
     if (resumeInfo) {
       setFormData({
@@ -72,7 +72,7 @@ function PersonalDetail({ enabledNext }) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          Authorization: `Bearer ${STRAPI_TOKEN}`,
         },
         body: JSON.stringify(payload),
       }
