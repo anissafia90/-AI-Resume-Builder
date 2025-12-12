@@ -46,15 +46,14 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    if (!resumeInfo?.id) {
-      toast("Resume id not found");
+    if (!resumeInfo?.documentId) {
+      toast("Resume documentId not found");
       setLoading(false);
       return;
     }
 
     const payload = {
       data: {
-        // مهم: Strapi v4 يتطلب الـ data wrapper
         Title: resumeInfo.Title,
         ResumeId: resumeInfo.ResumeId,
         UserEmail: resumeInfo.UserEmail,
@@ -70,12 +69,12 @@ function PersonalDetail({ enabledNext }) {
 
     try {
       const response = await fetch(
-        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.id}`,
+        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.documentId}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
+            Authorization: `Bearer ${STRAPI_TOKEN}`,
           },
           body: JSON.stringify(payload),
         }
@@ -90,11 +89,7 @@ function PersonalDetail({ enabledNext }) {
         return;
       }
 
-      // تحديث الـ context بالكامل
-      setResumeInfo({
-        ...data.data, // كل الحقول من Strapi
-      });
-
+      setResumeInfo(data.data);
       toast("Details updated successfully");
       enabledNext(true);
     } catch (error) {
