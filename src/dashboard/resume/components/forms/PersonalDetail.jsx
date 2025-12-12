@@ -46,15 +46,15 @@ function PersonalDetail({ enabledNext }) {
     e.preventDefault();
     setLoading(true);
 
-    const realId = resumeInfo?.id;
-    if (!realId) {
-      toast("Resume ID not found");
+    if (!resumeInfo?.documentId) {
+      toast("Resume documentId not found");
       setLoading(false);
       return;
     }
 
     const payload = {
       data: {
+        // مهم: Strapi v4 يتطلب الـ data wrapper
         Title: resumeInfo.Title,
         ResumeId: resumeInfo.ResumeId,
         UserEmail: resumeInfo.UserEmail,
@@ -68,33 +68,37 @@ function PersonalDetail({ enabledNext }) {
       },
     };
 
-    await fetch(
-      `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${STRAPI_TOKEN}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-
     try {
-      const resp = await GlobalApi.UpdateResumeDetail(resumeInfo.id, payload);
+      const response = await fetch(
+        `https://artistic-smile-d0e6ac543f.strapiapp.com/api/user-resumes/${resumeInfo.documentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
-      console.log("Updating resume ID:", resumeInfo.id);
-      console.log("Payload:", payload);
+      const data = await response.json();
 
+      if (!response.ok) {
+        console.error(data);
+        toast("Update failed");
+        setLoading(false);
+        return;
+      }
+
+      // تحديث الـ context بالكامل
       setResumeInfo({
-        id: resp.data.id,
-        ...resp.data.attributes,
+        ...data.data, // كل الحقول من Strapi
       });
 
       toast("Details updated successfully");
       enabledNext(true);
     } catch (error) {
-      console.error(error.response?.data || error);
+      console.error(error);
       toast("Update failed");
     } finally {
       setLoading(false);
