@@ -24,7 +24,7 @@ function AddResume() {
   const onCreate = async () => {
     if (!user || loading) return;
 
-    if (!resumeTitle?.trim()) {
+    if (!resumeTitle || !resumeTitle.trim()) {
       alert("Resume title is required");
       return;
     }
@@ -33,25 +33,25 @@ function AddResume() {
       setLoading(true);
 
       const payload = {
-        Title: resumeTitle,
+        Title: resumeTitle.trim(),
         ResumeId: uuidv4(),
-        UserEmail: user.primaryEmailAddress?.emailAddress,
+        UserEmail: user.primaryEmailAddress.emailAddress,
         UserName: user.fullName,
       };
 
-      const resp = await GlobalApi.CreateNewResume(payload);
+      console.log("CREATE PAYLOAD:", payload);
 
-      console.log("CREATE RESPONSE:", resp.data);
+      const resp = await GlobalApi.CreateNewResume(payload);
 
       const documentId = resp.data?.data?.documentId;
 
       if (!documentId) {
-        throw new Error("documentId not returned from Strapi");
+        throw new Error("documentId missing in response");
       }
 
       navigation(`/dashboard/resume/${documentId}/edit`);
-    } catch (error) {
-      console.error("CREATE RESUME ERROR:", error);
+    } catch (err) {
+      console.error("CREATE RESUME ERROR:", err.response?.data || err);
       alert("Failed to create resume");
     } finally {
       setLoading(false);
