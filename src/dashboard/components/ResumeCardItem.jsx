@@ -72,14 +72,10 @@ function ResumeCardItem({ resume, refreshData }) {
     );
   };
   return (
-    <div className="">
+    <div dir="rtl" className="">
       <Link to={"/dashboard/resume/" + resume.documentId + "/edit"}>
         <div
-          className="p-14  bg-gradient-to-b
-          from-pink-100 via-purple-200 to-blue-200
-        h-[280px] 
-          rounded-t-lg border-t-4
-        "
+          className="p-14 bg-gradient-to-b from-white/10 via-slate-100 to-slate-200 h-[280px] rounded-t-lg border-t-4"
           style={{
             borderColor: resume?.themeColor,
           }}
@@ -94,12 +90,12 @@ function ResumeCardItem({ resume, refreshData }) {
         </div>
       </Link>
       <div
-        className="border p-3 flex justify-between  text-white rounded-b-lg shadow-lg"
+        className="border p-3 flex justify-between items-center text-white rounded-b-lg shadow-lg"
         style={{
           background: resume?.themeColor,
         }}
       >
-        <h2 className="text-sm text-black">{resume.Title}</h2>
+        <h2 className="text-sm text-black font-semibold">{resume.Title}</h2>
 
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -111,27 +107,27 @@ function ResumeCardItem({ resume, refreshData }) {
                 navigation("/dashboard/resume/" + resume.documentId + "/edit")
               }
             >
-              Edit
+              تعديل
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 navigation("/my-resume/" + resume.documentId + "/view")
               }
             >
-              View
+              عرض
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 navigation("/my-resume/" + resume.documentId + "/view")
               }
             >
-              Download
+              تنزيل
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpenUpdateDialog(true)}>
-              Rename
+              إعادة تسمية
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpenAlert(true)}>
-              Delete
+              حذف
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -139,18 +135,17 @@ function ResumeCardItem({ resume, refreshData }) {
         <AlertDialog open={openAlert}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>هل أنت متأكد من الحذف؟</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                هذا الإجراء لا يمكن التراجع عنه. سيتم حذف السيرة نهائياً.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel onClick={() => setOpenAlert(false)}>
-                Cancel
+                إلغاء
               </AlertDialogCancel>
               <AlertDialogAction onClick={onDelete} disabled={loading}>
-                {loading ? <Loader2Icon className="animate-spin" /> : "Delete"}
+                {loading ? <Loader2Icon className="animate-spin" /> : "حذف"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -159,24 +154,24 @@ function ResumeCardItem({ resume, refreshData }) {
         <AlertDialog open={openUpdateDialog}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Update Resume Title</AlertDialogTitle>
+              <AlertDialogTitle>تحديث عنوان السيرة</AlertDialogTitle>
               <AlertDialogDescription>
-                Enter a new title for your resume.
+                أدخل عنواناً جديداً لسيرتك الذاتية.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <div className="py-4">
               <Input
                 value={updatedTitle}
                 onChange={(e) => setUpdatedTitle(e.target.value)}
-                placeholder="Resume Title"
+                placeholder="عنوان السيرة"
               />
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel onClick={() => setOpenUpdateDialog(false)}>
-                Cancel
+                إلغاء
               </AlertDialogCancel>
               <AlertDialogAction onClick={onUpdate} disabled={loading}>
-                {loading ? <Loader2Icon className="animate-spin" /> : "Update"}
+                {loading ? <Loader2Icon className="animate-spin" /> : "تحديث"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

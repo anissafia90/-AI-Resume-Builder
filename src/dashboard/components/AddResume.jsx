@@ -53,40 +53,48 @@ function AddResume() {
     );
   };
   return (
-    <div>
+    <div dir="rtl" className="text-white">
       <div
-        className="p-14 py-24 border 
-        items-center flex 
-        justify-center bg-secondary
-        rounded-lg h-[280px]
-        hover:scale-105 transition-all hover:shadow-md
-        cursor-pointer border-dashed"
+        className="group p-8 md:p-10 border items-center flex flex-col gap-3 justify-center bg-slate-900/50 rounded-xl h-[280px] hover:-translate-y-0.5 transition-all hover:shadow-lg cursor-pointer border-dashed ring-1 ring-white/10"
         onClick={() => setOpenDialog(true)}
       >
-        <PlusSquare />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary">
+          <PlusSquare className="h-6 w-6" />
+        </div>
+        <div className="text-center">
+          <p className="text-sm text-slate-300">إنشاء سيرة جديدة</p>
+          <p className="text-xs text-slate-400">ابدأ سيرتك خلال دقائق</p>
+        </div>
       </div>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg sm:max-w-[425px] -translate-x-1/2 -translate-y-1/2 p-6 bg-background rounded-lg shadow-lg">
+        <DialogContent className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg sm:max-w-[425px] -translate-x-1/2 -translate-y-1/2 p-6 bg-slate-950/90 backdrop-blur rounded-xl shadow-2xl border border-white/10">
           <DialogHeader>
-            <DialogTitle>Create New Resume</DialogTitle>
-            <DialogDescription>
-              <p>Add a title for your new resume</p>
+            <DialogTitle className="text-lg font-bold">
+              إنشاء سيرة جديدة
+            </DialogTitle>
+            <DialogDescription className="text-slate-300">
+              <p>أدخل عنواناً واضحاً لسيرتك الجديدة</p>
               <Input
-                className="my-2"
-                placeholder="Ex.Full Stack resume"
+                className="my-3"
+                placeholder="مثال: مطوّر واجهات أمامية"
                 onChange={(e) => setResumeTitle(e.target.value)}
               />
             </DialogDescription>
-            <div className="flex justify-end gap-5">
-              <Button onClick={() => setOpenDialog(false)} variant="ghost">
-                Cancel
+            <div className="flex justify-end gap-3">
+              <Button
+                onClick={() => setOpenDialog(false)}
+                variant="ghost"
+                className="rounded-full"
+              >
+                إلغاء
               </Button>
               <Button
                 disabled={!resumeTitle || loading}
                 onClick={() => onCreate()}
+                className="rounded-full bg-primary hover:bg-primary/90"
               >
-                {loading ? <Loader2 className="animate-spin" /> : "Create"}
+                {loading ? <Loader2 className="animate-spin" /> : "إنشاء"}
               </Button>
             </div>
           </DialogHeader>
