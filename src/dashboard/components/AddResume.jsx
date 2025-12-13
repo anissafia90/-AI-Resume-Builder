@@ -22,36 +22,43 @@ function AddResume() {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const onCreate = async () => {
-    if (!user) {
-      alert("You must be logged in");
+    if (!user || loading) return;
+
+    if (!resumeTitle?.trim()) {
+      alert("Resume title is required");
       return;
     }
-    setLoading(true);
-    const uuid = uuidv4();
-    // console.log(uuid);
-    const data = {
-      Title: resumeTitle,
-      ResumeId: uuid,
-      UserEmail: user?.primaryEmailAddress?.emailAddress,
-      UserName: user?.fullName,
-    };
 
-    GlobalApi.CreateNewResume(data).then(
-      (resp) => {
-        console.log(resp.data.data.documentId);
-        console.log(resp.data.data);
-        if (resp) {
-          setLoading(false);
-          navigation(
-            "/dashboard/resume/" + resp.data.data.documentId + "/edit"
-          );
-        }
-      },
-      (error) => {
-        setLoading(false);
+    try {
+      setLoading(true);
+
+      const payload = {
+        Title: resumeTitle,
+        ResumeId: uuidv4(),
+        UserEmail: user.primaryEmailAddress?.emailAddress,
+        UserName: user.fullName,
+      };
+
+      const resp = await GlobalApi.CreateNewResume(payload);
+
+      console.log("CREATE RESPONSE:", resp.data);
+
+      const documentId = resp.data?.data?.documentId;
+
+      if (!documentId) {
+        throw new Error("documentId not returned from Strapi");
       }
-    );
+
+      navigation(`/dashboard/resume/${documentId}/edit`);
+    } catch (error) {
+      console.error("CREATE RESUME ERROR:", error);
+      alert("Failed to create resume");
+    } finally {
+      setLoading(false);
+      setOpenDialog(false);
+    }
   };
+
   return (
     <div dir="rtl" className="text-white">
       <div
