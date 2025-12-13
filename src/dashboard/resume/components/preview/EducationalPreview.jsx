@@ -9,7 +9,7 @@ function EducationalPreview({ resumeInfo }) {
           color: resumeInfo?.themeColor,
         }}
       >
-        Education
+        Ausbildung
       </h2>
       <hr
         style={{

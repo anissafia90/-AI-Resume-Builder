@@ -82,26 +82,40 @@ function ThemeColor() {
         <Button
           variant="outline"
           size="sm"
-          className="flex gap-3 items-center px-3 py-2 rounded"
+          className="flex gap-2 items-center px-4 py-2 rounded-full bg-slate-800/60 hover:bg-slate-700 border border-white/10 text-white"
         >
-          <LayoutGrid /> Theme
+          <LayoutGrid className="h-4 w-4" />
+          <span className="hidden sm:inline">الألوان</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
-        <h2 className="mb-2 text-sm font-bold">Select Theme Color</h2>
+      <PopoverContent className="w-64 bg-slate-900/95 backdrop-blur border border-white/10 rounded-2xl shadow-2xl p-4">
+        <h2 className="mb-4 text-sm font-bold text-white text-center">
+          اختر لون السيرة
+        </h2>
         <div className="grid grid-cols-5 gap-3">
           {colors.map((item, index) => (
             <div
               key={index}
               onClick={() => onColorSelect(item)}
-              className={`h-5 w-5 rounded-full cursor-pointer hover:border-black border ${
-                selectedColor === item ? "border border-black" : ""
+              className={`h-8 w-8 rounded-full cursor-pointer hover:scale-110 transition-transform shadow-lg ${
+                selectedColor === item
+                  ? "ring-2 ring-white ring-offset-2 ring-offset-slate-900"
+                  : ""
               }`}
               style={{
                 background: item,
               }}
             ></div>
           ))}
+        </div>
+        <div className="mt-4 pt-3 border-t border-white/10">
+          <p className="text-xs text-slate-400 text-center">
+            اللون الحالي:
+            <span
+              className="inline-block w-4 h-4 rounded-full mr-2 align-middle"
+              style={{ background: selectedColor }}
+            ></span>
+          </p>
         </div>
       </PopoverContent>
     </Popover>

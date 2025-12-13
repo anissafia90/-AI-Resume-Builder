@@ -9,7 +9,7 @@ function SkillsPreview({ resumeInfo }) {
           color: resumeInfo?.themeColor,
         }}
       >
-        Skills
+        Fähigkeiten
       </h2>
       <hr
         style={{

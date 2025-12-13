@@ -14,38 +14,58 @@ function FormSection() {
   const [enableNext, setEnableNext] = useState(true);
   const { resumeId } = useParams();
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-5">
+    <div dir="rtl" className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-4 rounded-2xl border border-white/10 bg-slate-900/50 shadow-lg">
+        <div className="flex gap-3">
           <Link to={"/dashboard"}>
-            <Button>
-              <Home />
+            <Button className="bg-slate-800/60 hover:bg-slate-700 border border-white/10 rounded-full">
+              <Home className="h-4 w-4" />
             </Button>
           </Link>
           <ThemeColor />
         </div>
-        <div className="flex gap-2">
-          {activeFormIndex > 1 && (
+
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2 text-sm text-slate-300">
+            <span className="font-medium">الخطوة</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-primary font-bold">
+              {activeFormIndex}
+            </span>
+            <span className="text-slate-400">من 5</span>
+          </div>
+
+          <div className="flex gap-2">
+            {activeFormIndex > 1 && (
+              <Button
+                className="bg-slate-800/60 hover:bg-slate-700 border border-white/10 rounded-full"
+                size="sm"
+                onClick={() => setActiveFormIndex(activeFormIndex - 1)}
+              >
+                <ArrowRight className="h-4 w-4" />
+                <span className="hidden sm:inline mr-2">السابق</span>
+              </Button>
+            )}
             <Button
-              className="flex gap-5"
+              disabled={!enableNext}
+              className="bg-primary hover:bg-primary/90 rounded-full"
               size="sm"
-              onClick={() => setActiveFormIndex(activeFormIndex - 1)}
+              onClick={() => setActiveFormIndex(activeFormIndex + 1)}
             >
-              <ArrowLeft />
+              <span className="hidden sm:inline ml-2">التالي</span>
+              <ArrowLeft className="h-4 w-4" />
             </Button>
-          )}
-          <Button
-            disabled={!enableNext}
-            className="flex gap-5"
-            size="sm"
-            onClick={() => setActiveFormIndex(activeFormIndex + 1)}
-          >
-            {" "}
-            Next
-            <ArrowRight />{" "}
-          </Button>
+          </div>
         </div>
       </div>
+
+      <div className="sm:hidden flex items-center justify-center gap-2 text-sm text-slate-300 p-3 rounded-xl bg-slate-900/30 border border-white/5">
+        <span className="font-medium">الخطوة</span>
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-xs">
+          {activeFormIndex}
+        </span>
+        <span className="text-slate-400">من 5</span>
+      </div>
+
       {/* Personal Detail  */}
       {activeFormIndex == 1 ? (
         <PersonalDetail enabledNext={(v) => setEnableNext(v)} />

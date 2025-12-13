@@ -77,50 +77,70 @@ function Skills() {
     });
   }, [skillsList]);
   return (
-    <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Skills</h2>
-      <p>Add Your top professional key skills</p>
+    <div
+      dir="rtl"
+      className="p-6 md:p-8 shadow-2xl rounded-2xl border border-primary/30 bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur mt-10"
+    >
+      <div className="mb-6">
+        <h2 className="font-bold text-2xl text-white">المهارات</h2>
+        <p className="text-slate-300 text-sm mt-1">
+          أضف أهم مهاراتك المهنية والتقنية
+        </p>
+      </div>
 
-      <div>
+      <div className="space-y-4">
         {(skillsList || []).map((item, index) => (
-          <div className="flex justify-between mb-2 border rounded-lg p-3 ">
-            <div>
-              <label className="text-xs">Name</label>
+          <div
+            key={index}
+            className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-xl border border-white/10 bg-slate-900/50 p-4 shadow-lg"
+          >
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                اسم المهارة
+              </label>
               <Input
-                className="w-full"
+                className="w-full bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
                 defaultValue={item.name}
                 onChange={(e) => handleChange(index, "name", e.target.value)}
+                placeholder="مثال: React.js"
               />
             </div>
-            <Rating
-              style={{ maxWidth: 120 }}
-              value={item.rating}
-              onChange={(v) => handleChange(index, "rating", v)}
-            />
+            <div className="flex flex-col items-start md:items-center gap-2">
+              <label className="text-sm font-medium text-slate-200">
+                مستوى الإتقان
+              </label>
+              <Rating
+                style={{ maxWidth: 140 }}
+                value={item.rating}
+                onChange={(v) => handleChange(index, "rating", v)}
+              />
+            </div>
           </div>
         ))}
       </div>
-      <div className="flex justify-between">
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-6">
+        <div className="flex gap-2 w-full sm:w-auto">
           <Button
             variant="outline"
             onClick={AddNewSkills}
-            className="text-primary"
+            className="flex-1 sm:flex-none text-primary border-primary/30 hover:bg-primary/10 rounded-full"
           >
-            {" "}
-            + Add More Skill
+            + إضافة مهارة
           </Button>
           <Button
             variant="outline"
             onClick={RemoveSkills}
-            className="text-primary"
+            className="flex-1 sm:flex-none text-red-400 border-red-400/30 hover:bg-red-400/10 rounded-full"
           >
-            {" "}
-            - Remove
+            - إزالة
           </Button>
         </div>
-        <Button disabled={loading} onClick={() => onSave()}>
-          {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+        <Button
+          disabled={loading}
+          onClick={() => onSave()}
+          className="w-full sm:w-auto bg-primary hover:bg-primary/90 rounded-full"
+        >
+          {loading ? <LoaderCircle className="animate-spin" /> : "حفظ"}
         </Button>
       </div>
     </div>

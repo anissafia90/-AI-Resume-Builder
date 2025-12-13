@@ -101,75 +101,110 @@ function PersonalDetail({ enabledNext }) {
   };
 
   return (
-    <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Personal Detail</h2>
-      <p>Get Started with the basic information</p>
+    <div
+      dir="rtl"
+      className="p-6 md:p-8 shadow-2xl rounded-2xl border border-primary/30 bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur mt-10"
+    >
+      <div className="mb-6">
+        <h2 className="font-bold text-2xl text-white">المعلومات الشخصية</h2>
+        <p className="text-slate-300 text-sm mt-1">
+          ابدأ بإدخال معلوماتك الأساسية
+        </p>
+      </div>
 
       <form onSubmit={onSave}>
-        <div className="grid grid-cols-2 mt-5 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-sm">First Name</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              الاسم الأول
+            </label>
             <Input
               name="firstName"
               defaultValue={formData.firstName || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: أحمد"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
           <div>
-            <label className="text-sm">Last Name</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              الاسم الأخير
+            </label>
             <Input
               name="lastName"
               defaultValue={formData.lastName || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: بن علي"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
 
-          <div className="col-span-2">
-            <label className="text-sm">Job Title</label>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              المسمى الوظيفي
+            </label>
             <Input
               name="jobTitle"
               defaultValue={formData.jobTitle || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: مطور واجهات أمامية"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
 
-          <div className="col-span-2">
-            <label className="text-sm">Address</label>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              العنوان
+            </label>
             <Input
               name="address"
               defaultValue={formData.address || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: تونس، العاصمة"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
 
           <div>
-            <label className="text-sm">Phone</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              رقم الهاتف
+            </label>
             <Input
               name="phone"
               defaultValue={formData.phone || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: +216 12 345 678"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
 
           <div>
-            <label className="text-sm">Email</label>
+            <label className="block text-sm font-medium text-slate-200 mb-2">
+              البريد الإلكتروني
+            </label>
             <Input
               name="email"
               defaultValue={formData.email || ""}
               required
               onChange={handleInputChange}
+              placeholder="مثال: ahmed@example.com"
+              className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
             />
           </div>
         </div>
 
-        <div className="mt-3 flex justify-end">
-          <Button type="submit" disabled={loading}>
-            {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+        <div className="mt-6 flex justify-end">
+          <Button
+            type="submit"
+            disabled={loading}
+            className="bg-primary hover:bg-primary/90 rounded-full px-8"
+          >
+            {loading ? <LoaderCircle className="animate-spin" /> : "حفظ"}
           </Button>
         </div>
       </form>

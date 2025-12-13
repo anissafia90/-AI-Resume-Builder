@@ -9,7 +9,7 @@ function ExperiencePreview({ resumeInfo }) {
           color: resumeInfo?.themeColor,
         }}
       >
-        Professional Experience
+        Berufserfahrung
       </h2>
       <hr
         style={{

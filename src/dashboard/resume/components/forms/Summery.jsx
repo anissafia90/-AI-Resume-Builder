@@ -77,56 +77,75 @@ function Summery({ enabledNext }) {
   };
 
   return (
-    <div>
-      <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-        <h2 className="font-bold text-lg">Summary</h2>
-        <p>Add Summary for your job title</p>
+    <div dir="rtl">
+      <div className="p-6 md:p-8 shadow-2xl rounded-2xl border border-primary/30 bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur mt-10">
+        <div className="mb-6">
+          <h2 className="font-bold text-2xl text-white">الملخص المهني</h2>
+          <p className="text-slate-300 text-sm mt-1">
+            أضف ملخصاً احترافياً يبرز خبراتك ومهاراتك
+          </p>
+        </div>
 
-        <form className="mt-7" onSubmit={onSave}>
-          <div className="flex justify-between items-end">
-            <label>Add Summary</label>
+        <form className="space-y-4" onSubmit={onSave}>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3">
+            <label className="block text-sm font-medium text-slate-200">
+              أضف الملخص
+            </label>
             <Button
               variant="outline"
               onClick={GenerateSummeryFromAI}
               type="button"
               size="sm"
-              className="border-primary text-primary flex gap-2"
+              className="border-primary/30 text-primary hover:bg-primary/10 flex gap-2 rounded-full"
             >
-              <Brain className="h-4 w-4" /> Generate from AI
+              <Brain className="h-4 w-4" /> إنشاء بالذكاء الاصطناعي
             </Button>
           </div>
 
           <Textarea
-            className="mt-5"
+            className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400 min-h-[150px]"
             required
             value={summery}
             onChange={(e) => setSummery(e.target.value)}
+            placeholder="اكتب ملخصاً مهنياً يوضح خبراتك وأهدافك الوظيفية..."
           />
 
-          <div className="mt-2 flex justify-end">
-            <Button type="submit" disabled={loading}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="bg-primary hover:bg-primary/90 rounded-full px-8"
+            >
+              {loading ? <LoaderCircle className="animate-spin" /> : "حفظ"}
             </Button>
           </div>
         </form>
       </div>
 
       {aiGeneratedSummeryList?.length > 0 && (
-        <div className="my-5">
-          <h2 className="font-bold text-lg">Suggestions</h2>
+        <div className="my-6">
+          <h2 className="font-bold text-xl text-white mb-4">
+            الاقتراحات الذكية
+          </h2>
 
-          {aiGeneratedSummeryList.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => setSummery(item?.summary)}
-              className="p-5 shadow-lg my-4 rounded-lg cursor-pointer"
-            >
-              <h2 className="font-bold my-1 text-primary">
-                Level: {item?.experience_level}
-              </h2>
-              <p>{item?.summary}</p>
-            </div>
-          ))}
+          <div className="space-y-4">
+            {aiGeneratedSummeryList.map((item, index) => (
+              <div
+                key={index}
+                onClick={() => setSummery(item?.summary)}
+                className="p-5 rounded-xl border border-white/10 bg-slate-900/50 shadow-lg cursor-pointer transition hover:-translate-y-0.5 hover:border-primary/50"
+              >
+                <h2 className="font-bold text-primary mb-2 flex items-center gap-2">
+                  <span className="text-sm bg-primary/20 px-3 py-1 rounded-full">
+                    المستوى: {item?.experience_level}
+                  </span>
+                </h2>
+                <p className="text-slate-200 leading-relaxed">
+                  {item?.summary}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

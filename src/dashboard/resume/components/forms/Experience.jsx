@@ -92,66 +92,97 @@ function Experience() {
     );
   };
   return (
-    <div>
-      <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-        <h2 className="font-bold text-lg">Professional Experience</h2>
-        <p>Add Your previous Job experience</p>
-        <div>
+    <div dir="rtl">
+      <div className="p-6 md:p-8 shadow-2xl rounded-2xl border border-primary/30 bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur mt-10">
+        <div className="mb-6">
+          <h2 className="font-bold text-2xl text-white">الخبرات المهنية</h2>
+          <p className="text-slate-300 text-sm mt-1">
+            أضف تفاصيل خبراتك العملية السابقة
+          </p>
+        </div>
+        <div className="space-y-6">
           {experinceList.map((item, index) => (
-            <div key={index}>
-              <div className="grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg">
+            <div
+              key={index}
+              className="rounded-xl border border-white/10 bg-slate-900/50 p-5 shadow-lg"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs">Position Title</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    المسمى الوظيفي
+                  </label>
                   <Input
                     name="title"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.title}
+                    placeholder="مثال: مطور برمجيات"
+                    className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
                   />
                 </div>
                 <div>
-                  <label className="text-xs">Company Name</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    اسم الشركة
+                  </label>
                   <Input
                     name="companyName"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.companyName}
+                    placeholder="مثال: تونيبليس"
+                    className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
                   />
                 </div>
                 <div>
-                  <label className="text-xs">City</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    المدينة
+                  </label>
                   <Input
                     name="city"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.city}
+                    placeholder="مثال: تونس"
+                    className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
                   />
                 </div>
                 <div>
-                  <label className="text-xs">State</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    الدولة
+                  </label>
                   <Input
                     name="state"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.state}
+                    placeholder="مثال: تونس"
+                    className="bg-slate-800/60 border-white/10 text-white placeholder:text-slate-400"
                   />
                 </div>
                 <div>
-                  <label className="text-xs">Start Date</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    تاريخ البداية
+                  </label>
                   <Input
                     type="date"
                     name="startDate"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.startDate}
+                    className="bg-slate-800/60 border-white/10 text-white"
                   />
                 </div>
                 <div>
-                  <label className="text-xs">End Date</label>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    تاريخ النهاية
+                  </label>
                   <Input
                     type="date"
                     name="endDate"
                     onChange={(event) => handleChange(index, event)}
                     defaultValue={item?.endDate}
+                    className="bg-slate-800/60 border-white/10 text-white"
                   />
                 </div>
-                <div className="col-span-2">
-                  {/* Work Summery  */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    وصف العمل والإنجازات
+                  </label>
                   <RichTextEditor
                     index={index}
                     defaultValue={item?.workSummery}
@@ -164,27 +195,29 @@ function Experience() {
             </div>
           ))}
         </div>
-        <div className="flex justify-between">
-          <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-6">
+          <div className="flex gap-2 w-full sm:w-auto">
             <Button
               variant="outline"
               onClick={AddNewExperience}
-              className="text-primary"
+              className="flex-1 sm:flex-none text-primary border-primary/30 hover:bg-primary/10 rounded-full"
             >
-              {" "}
-              + Add More Experience
+              + إضافة خبرة أخرى
             </Button>
             <Button
               variant="outline"
               onClick={RemoveExperience}
-              className="text-primary"
+              className="flex-1 sm:flex-none text-red-400 border-red-400/30 hover:bg-red-400/10 rounded-full"
             >
-              {" "}
-              - Remove
+              - إزالة
             </Button>
           </div>
-          <Button disabled={loading} onClick={() => onSave()}>
-            {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+          <Button
+            disabled={loading}
+            onClick={() => onSave()}
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90 rounded-full"
+          >
+            {loading ? <LoaderCircle className="animate-spin" /> : "حفظ"}
           </Button>
         </div>
       </div>
