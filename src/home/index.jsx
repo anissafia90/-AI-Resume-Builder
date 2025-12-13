@@ -34,7 +34,7 @@ function Home() {
               <div className="space-y-4">
                 <h1 className="text-4xl font-black leading-tight md:text-5xl lg:text-6xl">
                   ابنِ سيرتك الذاتية الاحترافية في دقائق
-                  <span className="text-primary"> بذكاء يفهمك</span>
+                  <span className="text-primary"> بذكاء</span>
                 </h1>
                 <p className="max-w-2xl text-lg text-slate-300">
                   محرر ذكي يكتب بالعربية، ينسق تلقائياً، ويقترح محتوى قوي يناسب
@@ -58,7 +58,7 @@ function Home() {
               </div>
 
               <div className="grid w-full max-w-xl grid-cols-2 gap-4 md:grid-cols-3">
-                {["١٬٥٠٠+ سيرة جاهزة", "٩٥٪ راضون", "٣ دقائق للإطلاق"].map(
+                {["100+ سيرة جاهزة", "90٪ راضون", "(3 دقائق للإطلاق)"].map(
                   (item, idx) => (
                     <div
                       key={item}
@@ -116,7 +116,7 @@ function Home() {
                 كيف يعمل
               </p>
               <h2 className="text-3xl font-bold md:text-4xl">
-                ٣ خطوات سهلة ومباشرة
+                3 خطوات سهلة ومباشرة
               </h2>
               <p className="text-slate-300">
                 من التسجيل حتى التنزيل دون تعقيد، كل شيء واضح باللغة العربية.
@@ -129,19 +129,19 @@ function Home() {
                   icon: Edit,
                   title: "اكتب أو ألصق بياناتك",
                   desc: "املأ الحقول الأساسية أو انسخ بياناتك الحالية، والمحرر سيعيد ترتيبها تلقائياً.",
-                  badge: "الخطوة ١",
+                  badge: "الخطوة 1",
                 },
                 {
                   icon: AtomIcon,
                   title: "فعّل الاقتراحات الذكية",
                   desc: "يحسن العبارات، يضيف كلمات مفتاحية، ويقترح صياغات تناسب الوظيفة.",
-                  badge: "الخطوة ٢",
+                  badge: "الخطوة 2",
                 },
                 {
                   icon: Share2,
                   title: "نزّل وشارك فوراً",
                   desc: "احفظ بصيغ متعددة أو شارك رابطاً جاهزاً، مع تصميم متجاوب على كل الأجهزة.",
-                  badge: "الخطوة ٣",
+                  badge: "الخطوة 3",
                 },
               ].map(({ icon: Icon, title, desc, badge }) => (
                 <div
